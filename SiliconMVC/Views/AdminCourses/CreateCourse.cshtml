@@ -1,0 +1,76 @@
+﻿@model CourseModel;
+
+<div class="container">
+    <form class="sign-in-form" method="post" asp-controller="Admin" asp-action="CreateCourse" novalidate>
+        <span>@Model.ErrorrMessage</span>
+        <div class="headlines">
+            <h1>Create Course</h1>
+        </div>
+        <div class="name-box">
+            <div id="Title">
+                <label asp-for="Title"><b>Title</b></label>
+                <span class="" asp-validation-for="Title"></span>
+                <input asp-for="@Model.Title" />
+            </div>
+            <div id="Price">
+                <label asp-for="Price"><b>Price</b></label>
+                <span asp-validation-for="Price" class=""></span>
+                <input asp-for="Price" />
+            </div>
+        </div>
+
+        <div id="DiscountPrice">
+            <label asp-for="@Model.DiscountPrice"><b>Discount price</b></label>
+            <span asp-validation-for="DiscountPrice" class=""></span>
+            <input asp-for="DiscountPrice" />
+        </div>
+
+        <div id="Hours">
+            <label asp-for="Hours"><b>Hours</b></label>
+            <span asp-validation-for="Hours" class=""></span>
+            <input asp-for="Hours" />
+        </div>
+        <div id="LikesInNumbers">
+            <label asp-for="LikesInNumbers"><b>LikesInNumbers</b></label>
+            <span asp-validation-for="LikesInNumbers" class=""></span>
+            <input asp-for="LikesInNumbers" />
+        </div>
+
+        <div id="LikesInProcent">
+            <label asp-for="LikesInProcent"><b>Likes In Procent</b></label>
+            <span asp-validation-for="LikesInProcent" class=""></span>
+            <input asp-for="LikesInProcent" />
+        </div>
+
+        <div id="Author">
+            <label asp-for="Author"><b>Author</b></label>
+            <span asp-validation-for="Author" class=""></span>
+            <input asp-for="Author" />
+        </div>
+
+        <div id="LikesInProcent">
+            <label asp-for="Description"><b>Description</b></label>
+            <span asp-validation-for="Description" class=""></span>
+            <input asp-for="Description" />
+        </div>
+
+        <div id="LikesInProcent">
+            <label asp-for="WhatYouLearn"><b>WhatYouLearn</b></label>
+            <span asp-validation-for="WhatYouLearn" class=""></span>
+            <input asp-for="WhatYouLearn" />
+        </div>
+
+        <div class="IsABestSeller">
+            <div>
+                <input asp-for="IsBestseller" class="form-check-input" type="checkbox" id="bestseller">
+                <label asp-for="IsBestseller" class="form-check-label" for="flexCheckDefault">
+                    Is a bestseller?
+                </label>
+            </div>
+            <span id="termsspan" asp-validation-for="IsBestseller" class=""></span>
+        </div>
+
+        <button class="btn-theme-s" type="submit">Sign in</button>
+    </form>
+</div>
+
