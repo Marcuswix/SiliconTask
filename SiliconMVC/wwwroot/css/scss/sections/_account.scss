@@ -8,12 +8,6 @@
             color: $gray-600;
         }
 
-        span {
-            color: $danger;
-            font-size: 0.9rem;
-            margin-left: 0.2rem;
-        }
-
         hr {
             margin-block: 2.5rem;
         }
@@ -66,11 +60,10 @@
                 padding-block: 0.5rem;
             }
 
-            #AccountMenu
-            {
+            #AccountMenu {
                 display: flex;
                 flex-direction: column;
-                gap: 0.5rem; 
+                gap: 0.5rem;
             }
         }
         //Right Side
@@ -81,8 +74,16 @@
             padding: 0rem;
 
             .basicInfo {
+                grid-column: span 2;
                 display: grid;
-                grid-template-columns: 1fr 1fr;
+                grid-template-columns: auto 1fr;
+                align-items: center;
+
+                .span
+                {
+                    margin-left: 0.5rem;     
+                }
+
 
                 .hide {
                     opacity: 0 !important;
@@ -112,6 +113,7 @@
 
 @media(min-width: 1820px) {
     #account {
+        align-items: start;
 
         .hr {
             display: none;

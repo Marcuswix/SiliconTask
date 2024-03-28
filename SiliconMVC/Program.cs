@@ -43,6 +43,8 @@ namespace Infrastructure
             builder.Services.AddScoped<SignInManager<UserEntity>>(); 
             builder.Services.AddScoped<SubscribeRepository>();
 
+            builder.Services.AddHttpClient();
+
             builder.Services.AddDefaultIdentity<UserEntity>(x =>
              {
                  x.User.RequireUniqueEmail = true;
@@ -99,6 +101,11 @@ namespace Infrastructure
 
             var app = builder.Build();
 
+            app.UseCors(x =>
+            x.AllowAnyHeader()
+            .AllowAnyOrigin()
+            .AllowAnyMethod());
+
             //Middleweres - gös saker innan sidan laddas...
             //app.UseExceptionHandler("/Home/Error");
             app.UseHsts();
@@ -125,7 +132,7 @@ namespace Infrastructure
                 }
             }
 
-                app.MapControllerRoute(
+            app.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");
 

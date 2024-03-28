@@ -35,7 +35,6 @@ namespace SiliconMVC.Controllers
         #endregion
 
         [HttpPost]
-        [Route("/signup")]
         public async Task<IActionResult> SignUp(SignUpViewModel viewModel)
         {
             SetDefaultValues();
@@ -70,7 +69,7 @@ namespace SiliconMVC.Controllers
                     }
                 }
             }
-            return View(viewModel);
+            return View("Index", viewModel);
         }
     }
 }

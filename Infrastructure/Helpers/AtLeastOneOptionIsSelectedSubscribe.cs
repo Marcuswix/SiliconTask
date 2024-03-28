@@ -10,7 +10,7 @@ namespace SiliconMVC.Helpers
                 var subscribeModel = (SubscribeModel)validationContext.ObjectInstance;
                 if (subscribeModel.Newsletter == true || subscribeModel.EventUpdates == true || subscribeModel.AdvertisingUpdates == true || subscribeModel.StartUps == true || subscribeModel.WeekInReview == true || subscribeModel.Podcasts == true)
                 {
-                    return ValidationResult.Success;
+                    return ValidationResult.Success!;
                 }
                 return new ValidationResult(ErrorMessage);
             }

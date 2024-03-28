@@ -10,8 +10,8 @@ namespace Infrastructure.Models
     public class ApiResponseModel
     {
         public int StatusCode { get; set; }
-        public List<SubscriberEntity> ContentResult { get; set; }
-        public string Message { get; set; }
+        public List<SubscriberEntity>? ContentResult { get; set; }
+        public string? Message { get; set; }
     }
 
 }

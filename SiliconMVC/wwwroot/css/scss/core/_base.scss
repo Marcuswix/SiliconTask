@@ -78,3 +78,16 @@ main {
     filter: blur(5px); 
     overflow-y: hidden;
 }
+
+.fixed-bottom {
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    background: $gray-100;
+
+
+    .container {
+        gap: 1rem;
+    }
+}

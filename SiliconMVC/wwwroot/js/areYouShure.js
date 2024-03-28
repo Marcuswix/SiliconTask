@@ -6,3 +6,5 @@ function areYouShure(email) {
 function cancel(elementId) {
     document.getElementById(elementId).classList.remove("showAreYouShureContainer");
 }
+
+

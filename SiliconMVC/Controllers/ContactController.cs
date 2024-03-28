@@ -18,7 +18,7 @@ namespace Infrastructure.Controllers
 
         
         [HttpPost]
-        public async Task <IActionResult> Message(MessageViewModel viewModel)
+        public IActionResult Message(MessageViewModel viewModel)
         {
             ViewBag.ShowFooter = true;
             ViewBag.ShowChoices = false;
@@ -34,7 +34,7 @@ namespace Infrastructure.Controllers
         }
 
         [HttpPost]
-        public async Task <IActionResult> Application(MessageViewModel model)
+        public IActionResult Application(MessageViewModel model)
         {
             ViewBag.ShowFooter = true;
             ViewBag.ShowChoices = false;

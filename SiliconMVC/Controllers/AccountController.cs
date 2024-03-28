@@ -117,7 +117,7 @@ namespace Infrastructure.Controllers
                     {
                         FirstName = userEntity.FirstName,
                         LastName = userEntity.LastName,
-                        Email = userEntity.Email,
+                        Email = userEntity.Email!,
                         Phone = userEntity.PhoneNumber,
                         Biography = userEntity.Biography,
                     }
@@ -200,7 +200,7 @@ namespace Infrastructure.Controllers
 
                 if (user != null)
                 {
-                    user.FirstName = model.BasicInfo.FirstName;
+                    user.FirstName = model.BasicInfo!.FirstName;
                     user.LastName = model.BasicInfo.LastName;
                     user.Email = model.BasicInfo.Email;
                     user.PhoneNumber = model.BasicInfo.Phone;
@@ -239,7 +239,7 @@ namespace Infrastructure.Controllers
 
             var user = await _userManager.GetUserAsync(User);
 
-                if (ModelState.IsValid && user.AddressId == null)
+                if (ModelState.IsValid && user!.AddressId == null)
                 {
                 var newAddress = new AccountDetailsAddressModel
                 {
@@ -251,7 +251,7 @@ namespace Infrastructure.Controllers
                     await _addressServices.CreateAddress(newAddress);
                     return RedirectToAction("Index", "Account", model);
                 }
-                if (ModelState.IsValid && user.AddressId != null)
+                if (ModelState.IsValid && user!.AddressId != null)
                 {
                     var successResult = await _addressServices.UpdateAddresses(model, user);
 

@@ -29,7 +29,7 @@ namespace SiliconMVC.Controllers
         #region [HttpGet] ChangePassword
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
 
             SetDefaultViewValues();
@@ -46,7 +46,7 @@ namespace SiliconMVC.Controllers
         #region [HttpGet] ChangePassword
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> ChangePasswordView()
+        public IActionResult ChangePasswordView()
         {
             SetDefaultViewValues();
 
@@ -63,7 +63,7 @@ namespace SiliconMVC.Controllers
         #region [HttpGet] ChangePassword
         [Authorize]
         [HttpGet]
-        public async Task<IActionResult> DeleteAccountView()
+        public IActionResult DeleteAccountView()
         {
             SetDefaultViewValues();
 

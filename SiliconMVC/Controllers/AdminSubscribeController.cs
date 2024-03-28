@@ -24,7 +24,7 @@ namespace SiliconMVC.Controllers
 
             using var http = new HttpClient();
 
-            var response = await http.GetAsync("https://localhost:7117/api/Subscribe");
+            var response = await http.GetAsync("https://localhost:7117/api/Subscribe?key=920344b7-dd86-4721-9ce0-92e80f7d7da4");
 
             if (response != null)
             {
@@ -32,7 +32,7 @@ namespace SiliconMVC.Controllers
 
                 var apiResponse = JsonConvert.DeserializeObject<ApiResponseModel>(json);
 
-                if (apiResponse.StatusCode == 200)
+                if (apiResponse!.StatusCode == 200)
                 {
                     var data = apiResponse.ContentResult;
                     return View(data);
@@ -69,6 +69,10 @@ namespace SiliconMVC.Controllers
                 else if (response.StatusCode == HttpStatusCode.NotFound)
                 {
                     TempData["ErrorMessage"] = "Not found: ";
+                }
+                else if(response.StatusCode == System.Net.HttpStatusCode.Unauthorized)
+                {
+                    TempData["ErrorMessage"] = "You are unauthorized to do this action";
                 }
                 else
                 {

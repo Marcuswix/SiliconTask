@@ -65,7 +65,7 @@ namespace Infrastructure.Services
                 {
                     var addressEntity = new AddressEntity
                     {
-                        StreetName = model.AddressInfo.Address,
+                        StreetName = model.AddressInfo!.Address,
                         StreetName2 = model.AddressInfo.Address2,
                         PostalCode = model.AddressInfo.PostalCode,
                         City = model.AddressInfo.City,

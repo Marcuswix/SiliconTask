@@ -17,7 +17,6 @@
     background: $theme;
     color: $white;
     border: none;
-    // width: 12rem;
 
     &:hover {
         text-decoration: none;
@@ -84,6 +83,7 @@
 
 .btn-red {
     @include button;
+    padding: 7px 28px;
     color: $white;
     border: none;
     background: $danger;

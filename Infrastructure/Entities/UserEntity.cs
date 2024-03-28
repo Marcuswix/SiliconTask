@@ -28,6 +28,7 @@ namespace Infrastructure.Entities
 
         public int? AddressId { get; set; }
 
+        [ProtectedPersonalData]
         public AddressEntity? Address { get; set; }
 
         public bool IsExternalAccount { get; set; } = false;

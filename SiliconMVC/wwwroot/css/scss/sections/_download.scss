@@ -10,7 +10,8 @@
 
         .imageContainer
         {
-            width: 100vw;
+            width: 100%;
+            padding-inline: 1rem;
             height: auto;
             display: flex;
             justify-content: center;

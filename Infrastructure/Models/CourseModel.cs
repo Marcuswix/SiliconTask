@@ -6,6 +6,7 @@ namespace Infrastructure.Models
     {
         [Required]
         [Display(Name = "Title")]
+        [StringLength(60)]
         public string Title { get; set; } = null!;
 
         [Display(Name = "Image")]
@@ -24,7 +25,7 @@ namespace Infrastructure.Models
         public string? Hours { get; set; }
 
         [Display(Name = "IsBestseller")]
-        public bool? IsBestseller { get; set; }
+        public bool IsBestseller { get; set; }
 
         [Display(Name = "LikesInNumbers")]
         public string? LikesInNumbers { get; set; }
@@ -33,8 +34,10 @@ namespace Infrastructure.Models
         public string? LikesInProcent { get; set; }
 
         [Display(Name = "Author")]
+        [StringLength(50)]
         public string? Author { get; set; }
 
+        [StringLength(1000)]
         [Display(Name = "Description")]
         public string? Description { get; set; }
 

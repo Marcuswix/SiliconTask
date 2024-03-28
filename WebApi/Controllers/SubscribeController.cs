@@ -2,6 +2,7 @@
 using Infrastructure.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using WebApi.Filters;
 
 namespace WebApi.Controllers
 {
@@ -42,8 +43,10 @@ namespace WebApi.Controllers
         }
         #endregion
 
+
         #region [HttpGet] Get/Read
         //[Authorize(Policy = "Admins")]
+        [UseApiKey]
         [HttpGet]
         public async Task<IActionResult> GetAll()
         {
@@ -53,10 +56,11 @@ namespace WebApi.Controllers
                 {
                     return Ok(subscribers);
                 }
-                if(subscribers.StatusCode == Infrastructure.Models.StatusCodes.NOT_FOUND)
+                else if(subscribers.StatusCode == Infrastructure.Models.StatusCodes.NOT_FOUND)
                 {
                     return NotFound();
                 }
+                else
                 return BadRequest(); 
         }
         #endregion
@@ -65,8 +69,6 @@ namespace WebApi.Controllers
         [HttpGet("{id}")]
         public async Task<IActionResult> GetOne(int id)
         {
-            if (id != null)
-            {
                 var result = await _subscribeRepository.GetOne(id);
 
                 if (result.StatusCode == Infrastructure.Models.StatusCodes.OK)
@@ -74,15 +76,13 @@ namespace WebApi.Controllers
                     return Ok(result);
                 }
 
-                return BadRequest();
-            }
-
             return NotFound();
         }
         #endregion
 
         #region [HttpPut] Update
         [HttpPut]
+        [UseApiKey]
         public async Task <IActionResult> Update(int id, SubscribeModel model)
         {
             if (model != null && ModelState.IsValid)
@@ -121,9 +121,7 @@ namespace WebApi.Controllers
                 {
                     return NotFound();
                 }
-                return BadRequest();
             }
-
             return BadRequest();
         }
         #endregion

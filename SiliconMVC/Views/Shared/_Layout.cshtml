@@ -1,5 +1,9 @@
-﻿<!DOCTYPE html>
-<html lang="sv-se">
+﻿@{
+    var themeMode = Context.Request.Cookies["ThemeMode"] ?? "ligth";
+}
+
+<!DOCTYPE html>
+<html lang="sv-se" class="@themeMode">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -25,8 +29,10 @@
 
     </wrapper>
 
+    <script src="/js/darkMode.js"></script>
+    <script src="/js/saveScrollPosition.js"></script>
     <script src="/js/script.js"></script>
-    <script src="/js/validation.js"></script>
 
+    <partial name="_CookieConsent" />
 </body>
 </html>

@@ -2,11 +2,21 @@
 using Microsoft.AspNetCore.Mvc;
 using Newtonsoft.Json;
 using System.Diagnostics;
+using System.Net.Http.Headers;
 
 namespace Infrastructure.Controllers
 {
     public class CoursesController : Controller
     {
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
+
+        public CoursesController(HttpClient httpClient, IConfiguration configuration)
+        {
+            _httpClient = httpClient;
+            _configuration = configuration;
+        }
+
         private void setValues()
         {
             ViewBag.ShowFooter = true;
@@ -21,37 +31,47 @@ namespace Infrastructure.Controllers
 
             try
             {
-                using var http = new HttpClient();
-
-                var response = await http.GetAsync("https://localhost:7117/api/Courses");
-
-                if (response.IsSuccessStatusCode)
+                if (HttpContext.Request.Cookies.TryGetValue("AccessToken", out var token))
                 {
-                    var json = await response.Content.ReadAsStringAsync();
 
-                    if (json.StartsWith("["))
+                _httpClient.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", token);
+
+                    var response = await _httpClient.GetAsync($"https://localhost:7117/api/Courses?key={_configuration["ApiKey:Secret"]}");
+
+                    if (response.IsSuccessStatusCode)
                     {
-                        var list = JsonConvert.DeserializeObject<List<CourseEntity>>(json);
-                        return View(list);
+                        var json = await response.Content.ReadAsStringAsync();
+
+                        if (json.StartsWith("{") || json.StartsWith("["))
+                        {
+                            var list = JsonConvert.DeserializeObject<List<CourseEntity>>(json);
+                            return View(list);
+                        }
+                        else
+                        {
+                            var course = JsonConvert.DeserializeObject<CourseEntity>(json);
+                            var dataList = new List<CourseEntity>() { course! };
+                            return View(dataList);
+                        }
                     }
                     else
                     {
-                        var course = JsonConvert.DeserializeObject<CourseEntity>(json);
-                        var dataList = new List<CourseEntity>() { course };
-                        return View(dataList);
+                        TempData["ErrorMessage"] = "At the moment there are no courses in the database.";
+                        return View();
                     }
+
                 }
                 else
-                {
-                    TempData["ErrorMessage"] = "At the moment there are no courses in the database.";
-                    return View();
-                }
+                { return View(); }
             }
-            catch (Exception ex) {
+            catch (Exception ex)
+            {
                 Debug.WriteLine(ex.Message);
                 TempData["ErrorMessage"] = "Something went wrong";
-                return View(); 
-                    }
+                return View();
+            }
+
+
 
 
         }

@@ -8,6 +8,9 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Newtonsoft.Json;
+using System.Text;
+
 
 namespace SiliconMVC.Controllers
 {
@@ -17,11 +20,15 @@ namespace SiliconMVC.Controllers
 
         private readonly SignInManager<UserEntity> _signInManager;
         private readonly UserManager<UserEntity> _userManager;
+        private readonly HttpClient _httpClient;
+        private readonly IConfiguration _configuration;
 
-        public SignInController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager)
+        public SignInController(SignInManager<UserEntity> signInManager, UserManager<UserEntity> userManager, HttpClient httpClient, IConfiguration configuration)
         {
             _signInManager = signInManager;
             _userManager = userManager;
+            _httpClient = httpClient;
+            _configuration = configuration;
         }
 
         public void SetDefaultValues()
@@ -49,6 +56,7 @@ namespace SiliconMVC.Controllers
 
         #region [HttpPost] SignIn
         [HttpPost]
+        [Route("/signin")]
         public async Task<IActionResult> SignIn(SignInViewModel model, string returnUrl)
         {
             SetDefaultValues();
@@ -60,14 +68,40 @@ namespace SiliconMVC.Controllers
 
                 if (result.Succeeded)
                 {
+                    var login = new Dictionary<string, string>()
+                    {
+                        { "email", model.Form.Email }, { "password", model.Form.Password }
+                    };
+
+                    var content = new StringContent(JsonConvert.SerializeObject(login), Encoding.UTF8, "application/json");
+
+                    //Här så får vi en token-string som gör att vi kan logga in...
+                    var response = await _httpClient.PostAsync($"https://localhost:7117/api/Auth/token?key={_configuration["ApiKey:Secret"]}", content);
+
+                    if(response.IsSuccessStatusCode)
+                    {
+                        var token = await response.Content.ReadAsStringAsync();
+                        var cookieOptions = new CookieOptions
+                        {
+                            HttpOnly = true,
+                            Secure = true,
+                            Expires = DateTime.Now.AddDays(1)
+                        };
+
+                        //Skickar med en cookie i webbläsaren("namn", variabel, "inställningar")
+                        Response.Cookies.Append("AccessToken", token, cookieOptions);
+                    }
 
                     if (!string.IsNullOrEmpty(returnUrl) && Url.IsLocalUrl(returnUrl))
-                        return Redirect(returnUrl);
-
-                    return RedirectToAction("Index", "Account");
+                        return LocalRedirect(returnUrl);
 
                 }
             }
+            else if(model.Form.Email == null || model.Form.Password == null)
+            {
+                return View("Index", model);
+            }
+
             ModelState.AddModelError("IncorrextValues", "Incorrect email or password");
             ViewData["ErrorMessage"] = "Incorrect email or password";
 

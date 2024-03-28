@@ -1,23 +1,26 @@
 ﻿@inject SignInManager<UserEntity> _signInManager
+@{
+    var themeMode = Context.Request.Cookies["ThemeMode"] ?? "light";
+    var isDark = (themeMode == "dark") ? true : false;
+}
 
 <header id="header" class="">
     <div class="container">
-        <a class="logo" asp-controller="Home" asp-action="Index"><img src="~/images/solid.svg" alt="Silicon logotype"></a>
+        <a class="logo" asp-controller="Home" asp-action="Index"><img src="~/images/@(isDark ? "logoDark.svg" : "solid.svg")" alt="Silicon logotype"></a>
 
         <div class="menu">
             <nav>
                 @if (ViewBag.ShowChoices)
                 {
                     <a class="menu-link" href="#showcase">Overview</a>
-                    <a class="menu-link" href="#features">Features</a>
-                    <a class="menu-link" asp-controller="Courses" asp-action="Index">Courses</a>
+                    <a class="menu-link" href="#features">Features</a>                   
                 }
+
                 <a class="menu-link" asp-controller="Contact" asp-action="Index">Contact</a>
 
                 @if (_signInManager.IsSignedIn(User))
                 {
-                    <a class="menu-link" asp-controller="" asp-action="">My Courses</a>
-
+                    <a class="menu-link" asp-controller="Courses" asp-action="Index">Courses</a>
                     @if (User.IsInRole("Admin"))
                     {
                         <a class="menu-link" asp-controller="Admin" asp-action="Index">Admin</a>
@@ -29,7 +32,7 @@
         <div class="btn-switch">
             <label>Light</label>
             <label class="switch" for="switch-mode">
-                <input type="checkbox" id="switch-mode" />
+                <input type="checkbox" id="switch-mode" checked="@isDark"/>
                 <span class="slider round"></span>
             </label>
             <label>Dark</label>
@@ -43,11 +46,11 @@
                     <li class="menu-link">Home</li></a>
                     <a class="menu-link" asp-controller="Contact" asp-action="Index">
                     <li class="menu-link">Contact</li></a>
-                    <a class="menu-link" asp-controller="Courses" asp-action="Index">
-                    <li class="menu-link">Courses</li></a>
 
                     @if (_signInManager.IsSignedIn(User))
                     {
+                        <a class="menu-link" asp-controller="Courses" asp-action="Index">
+                        <li class="menu-link">Courses</li></a>
                         <a class="menu-link" asp-controller="" asp-action="">
                         <li class="menu-link">My Courses</li></a>
                         

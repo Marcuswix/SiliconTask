@@ -31,6 +31,7 @@ namespace Infrastructure.Models
         public bool Podcasts { get; set; }
 
         [AtLeastOneOptionIsSelectedSubscribe(ErrorMessage = "You must select at least one option.")]
+        [Display(Name = "AtLeastOneOptionSelected")]
         public bool AtLeastOneOptionSelected => (Newsletter) || (EventUpdates) || (AdvertisingUpdates) || (StartUps) || (WeekInReview) || (Podcasts);
 
         public string? ErrorMessage { get; set; }

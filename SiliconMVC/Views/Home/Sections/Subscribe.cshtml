@@ -53,13 +53,13 @@
                     </div>
                 </div>
 
-                <span asp-validation-for="AtLeastOneOptionSelected"></span>
+            <div><span id="AtLeastOneOptionSelected" asp-validation-for="AtLeastOneOptionSelected"></span></div>
 
                 <div class="InputContainer">
 
                     <div class="subscribeInput">
                         <div class="icontainer"><i class="fa-regular fa-envelope"></i></div>
-                        <input class="subscribe" asp-for="Email" />
+                        <input class="subscribe" type="email" asp-for="Email" />
                     </div>
                     <button class="btn-theme" type="submit">Subscribe *</button>
                     <div class="terms"><p>* Yes, I agree to the <a asp-controller="" asp-action="">terms</a> and <a asp-controller="" asp-action="">privacy policy</a>.</p></div>
@@ -67,21 +67,20 @@
                     <div id="invalidEmail"><span class="" asp-validation-for="Email"></span></div>
 
                 </div>
-
-                <div id="spanMessage">
-                    <span class="@(TempData["ErrorMessage"] != null ? "error" : "") @(TempData["Message"] != null ? "success" : "")">
+                    <div>
                         @if (TempData["ErrorMessage"] != null)
                         {
-                            @TempData["ErrorMessage"]
+                            <span class="error">@TempData["ErrorMessage"]</span>
                         }
                         @if (TempData["Message"] != null)
                         {
-                            @TempData["Message"]
+                            <span class="success">@TempData["Message"]</span>
                         }
-                    </span>
-                </div>
+                    </div>
             </form>
     </div>
 </section>
+
+
 
 @await Html.PartialAsync("_ValidationScriptPartial")

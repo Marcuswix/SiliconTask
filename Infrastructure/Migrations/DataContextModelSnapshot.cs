@@ -42,6 +42,12 @@ namespace Infrastructure.Migrations
                     b.Property<string>("Hours")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("ImageALtText")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("ImageUrl")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<bool?>("IsBestseller")
                         .HasColumnType("bit");
 

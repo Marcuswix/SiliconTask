@@ -6,12 +6,16 @@ namespace Infrastructure.Models
     public class SignUpModel
     {
         //Prompt funkar som en "placeholder" del.
-        [Display(Name = "First name", Prompt = "Enter your first name", Order = 0)]
-        [Required(ErrorMessage = "Invalid first name")]
+        [Display(Name = "FirstName", Prompt = "Enter your first name", Order = 0)]
+        [Required(ErrorMessage = "A first name is required")]
+        [MinLength(2, ErrorMessage = "Invalid first name")]
+        [StringLength(100)]
         public string FirstName { get; set; } = null!;
 
-        [Display(Name = "Last name", Prompt = "Enter your last name", Order = 1)]
-        [Required(ErrorMessage = "Invalid last name")]
+        [Display(Name = "LastName", Prompt = "Enter your last name", Order = 1)]
+        [Required(ErrorMessage = "A last name is required")]
+        [MinLength(2, ErrorMessage = "Invalid last name")]
+        [StringLength(100)]
         public string LastName { get; set; } = null!;
 
         [Display(Name = "Email", Prompt = "Enter your email", Order = 2)]
@@ -26,7 +30,7 @@ namespace Infrastructure.Models
         [RegularExpression("^(?=.*[A-Z]).{8,}$", ErrorMessage = "Invalid password")]
         public string Password { get; set; } = null!;
 
-        [Display(Name = "Confrim password", Prompt = "Confirm your password", Order = 4)]
+        [Display(Name = "ConfirmPassword", Prompt = "Confirm your password", Order = 4)]
         [Required(ErrorMessage = "You must confirm your password")]
         [DataType(DataType.Password)]
         [Compare(nameof(Password), ErrorMessage = "Passwords doesn't match")]

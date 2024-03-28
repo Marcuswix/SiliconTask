@@ -38,22 +38,21 @@ public class HomeController : Controller
         {
             using var http = new HttpClient();
 
-            var url = "https://localhost:7117/api/Subscribe";
+            var content = new StringContent(JsonConvert.SerializeObject(model), Encoding.UTF8, "application/json");
 
-            var json = JsonConvert.SerializeObject(model);
-
-            var request = new HttpRequestMessage(HttpMethod.Post, url);
-            request.Content = new StringContent(json, Encoding.UTF8, "application/json");
-
-            var response = await http.SendAsync(request);
+            var response = await http.PostAsync("https://localhost:7117/api/Subscribe?key=920344b7-dd86-4721-9ce0-92e80f7d7da4", content);
 
             if (response.IsSuccessStatusCode)
             {
                 TempData["Message"] = "Your are now subscribing!";
             }
+            else if (response.StatusCode == System.Net.HttpStatusCode.Conflict)
+            {
+                TempData["ErrorMessage"] = "This email address is already registerd for subscription.";
+            }
             else
             {
-                TempData["ErrorMessage"] = "Something went wrong";
+                TempData["ErrorMessage"] = "Something went wrong. Please try agin later.";
             }
         }
 
@@ -61,22 +60,3 @@ public class HomeController : Controller
     }
 
 }
-
-
-//var result = await _subscribeServices.AddSubscriber(model);
-
-//if(result.StatusCode == Infrastructure.Models.StatusCodes.OK)
-//{
-//    TempData["Message"] = "Your are now subscribing!";
-
-//}
-//else if(result.StatusCode == Infrastructure.Models.StatusCodes.EXISTS)
-//{
-//    TempData["ErrorMessage"] = "This email is already up for subscription.";
-//}
-//else
-//{
-//    TempData["ErrorMessage"] = "Something went wrong";
-//}
-
-//return View("Index", model);

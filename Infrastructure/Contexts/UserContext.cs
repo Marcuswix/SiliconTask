@@ -6,10 +6,13 @@ namespace Infrastructure.Contexts
 {
     public class UserContext : IdentityDbContext<UserEntity>
     {
-        public UserContext(DbContextOptions options) : base(options)
+        public UserContext(DbContextOptions<UserContext> options) : base(options)
         {
         }
-        public virtual DbSet<AddressEntity> Addresses { get; set; }
+
+        public virtual DbSet<AddressEntity>? Addresses { get; set; }
+
+        public DbSet<UserEntity> Users { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
